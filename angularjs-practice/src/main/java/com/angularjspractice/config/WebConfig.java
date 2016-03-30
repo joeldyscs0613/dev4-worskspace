@@ -7,7 +7,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 
-@EnableWebMvc
+
 @Configuration
 public class WebConfig {
 

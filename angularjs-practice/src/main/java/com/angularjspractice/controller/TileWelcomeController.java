@@ -14,7 +14,7 @@ public class TileWelcomeController {
 		return "welcome";
 	}
 	
-	@RequestMapping("/")
+	@RequestMapping("/index")
 	public String index(Map<String, Object> model) {
 		return "index";
 	}
