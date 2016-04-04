@@ -1,0 +1,121 @@
+<!doctype html>
+<html ng-app="eventsApp">
+  <head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/app.css">
+  </head>  
+  
+  <body ng-cloack>
+    <div class="container">  
+    	<div class="navbar">
+    		<div class="navbar-inner">
+    			<ul class="nav">
+    				<li>
+    					<a href="/newEvent.html">Create Event</a>
+    				</li>
+    			</ul>
+    		</div>
+    	</div>
+    	<div ng-controller="eventController" style="padding-left:20px; padding-right:20px">
+    		<img alt="Error Loading the Image" ng-src="{{event.imageUrl}}"/>
+    		<div class="row">
+    			<div class="span11">
+    				<!--<h2 ng-bind="event.name"></h2>  -->
+    				<h2 ng-style="myStyle" ng-bind-template="{{event.name}} {{event.date}}"></h2>
+    			</div>    			
+    		</div>
+    		
+    		<button class="btn" ng-disabled="buttonDisabled">Disabled</button>
+    		
+    		<div ng-non-bindable> Below is the Angular expression result of {{1 + 3}}</div>
+    		<div>{{1 + 3}}</div>
+    		<div ng-bind-html="snippest"></div>
+    		<div ng-show="showBoolVal">Show this!</div>
+    		<div ng-hide="showBoolVal">Hide this!</div>
+    		<div class="row">
+    			<div class="span3">
+    				<div><strong>Date: </strong>{{event.date}}</div>
+    				<div><strong>Time: </strong>{{event.time}}</div>
+    				<div><strong>Price: </strong>{{event.price | currency}}</div>
+    			</div>
+    			<div class="span4">
+    				<address>
+    				    <strong>Address:</strong></br>
+    						{{event.location.address}}</br>
+    				    	{{event.location.city}}, {{event.location.province}}
+    				</address>
+    			</div> 			
+    		</div>
+    		
+    		<div>{{ 3.141956 | number:2 }}</div> 
+    		<div>{{ 5 | number:2 }}</div>
+    		<div>{{ 3.141956 | currency }}</div>
+    		<div>Today is: {{today | date:'mediumDate'}} </div>
+    		 
+    		<div>Using Json filter for debugging: {{ {a:1, b:'hi', c:{aa:35, bb:h2} } | json}} </div> 
+    		<hr/>
+   			
+   			
+   			<h3 ng-class="myClass">Sessions</h3>
+   			
+   			Order By:
+   			<select ng-model="sortOrder" class="input-small">
+   				<option selected value="name">Name</option>
+   				<option value="-upCountVote">Votes</option>
+   			</select>
+   			
+			|
+			
+   			Show:
+   			<select ng-model="query.level" class="input-medium">
+   				<option selected value="">All</option>
+   				<option ng-repeat="session in event.sessions" value="{{session.level}}">{{session.level}}</option>
+   			</select>
+   			
+   			|
+   			
+   			Limit To:
+   			<select ng-model="limitTo" class="input-small">
+   				<option selected value="all" >All</option>
+   				<option ng-repeat="session in event.sessions"  value="{{$index+1}}">{{$index+1}}</option>
+   			</select>
+   		
+   			
+   			<ul class="thumbnails">
+   				<li ng-repeat="session in event.sessions | orderBy:sortOrder | limitTo:limitTo | filter:query">
+	   				<div class="row session">
+	   					<div class="span0 well votingWidget">
+	   						<div class="votingButton" ng-click="upVoteSession(session)">
+	   							<i class="icon-chevron-up icon-white"></i>
+	   						</div>
+	   						<div class="badge badge-inverse">
+	   							<div>{{session.upVoteCount}}</div>
+	   						</div>
+	   						<div class="votingButton" ng-click="downVoteSession(session)">
+	   							<i ng:class="{true:'icon-chevron-down icon-white', false:'icon-chevron-down'}[session.upVoteCount>0]"></i>
+	   						</div>
+	   					</div>
+		   				<div class="well span9">
+		   					<h4 class="well-title">{{session.name}}</h4>
+		   					<h6 margin-top="-10px" >Creator: {{session.creatorName | capitalizations}}</h6>
+		   					<span class="well-title">Duration: {{session.duration | durations}}</span><br/>
+		   					<span class="well-title">Level: {{session.level}}</span>
+		   					<p class="well-title">Abstract: {{session.sessionAbstract}}</p>
+		   				</div>   				
+	   				</div>
+   				</li>
+   			</ul>      	
+    	</div>       
+    </div>
+    
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/underscore-1.4.4.min.js"></script>
+    <script src="/lib/bootstrap.min.js"></script>
+    <script src="/lib/angular/angular.js"></script>
+    <script src="/lib/angular/angular-sanitize.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/controllers/eventController.js"></script>
+    <script src="/js/services/eventDataService.js"></script>
+    <script src="/js/filters.js"></script>
+  </body>
+</html>

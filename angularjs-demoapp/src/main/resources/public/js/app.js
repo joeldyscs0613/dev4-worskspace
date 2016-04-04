@@ -1,17 +1,11 @@
 'use strict';
 
-var eventsApp = angular.module('eventsApp', []);
+var eventsApp = angular.module('eventsApp', ['ngSanitize']);
 
-eventsApp.factory('eventData', function($http, $log) {
-    return {
-        getEvent: function(successcb) {
-            $http({method: 'GET', url: '/data/event/1'}).
-                success(function(data, status, headers, config) {
-                    successcb(data)
-                }).
-                error(function(data, status, headers, config) {
-                    $log.warn(data, status, headers(), config);
-                });
-        }
-    };
-});
+
+/*controller('ShipwreckEditController', function($scope, $state, $stateParams, Shipwreck) {
+	  $scope.updateShipwreck = function() { //Update the edited shipwreck. Issues a PUT to /api/v1/shipwrecks/:id
+	    $scope.shipwreck.$update(function() {
+	      $state.go('shipwrecks'); // on success go back to the list i.e. shipwrecks state.
+	    });
+	  };*/
