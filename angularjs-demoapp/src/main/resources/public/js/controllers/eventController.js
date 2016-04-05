@@ -1,7 +1,7 @@
 'use strict';
 
 eventsApp.controller('eventController', 
-  function EventController($scope, eventDataService) {
+  function eventController($scope, eventDataService, $log) {
     
     $scope.snippest = '<span style="color:red">Hi there!</span>'
     $scope.showBoolVal = true;
@@ -25,12 +25,23 @@ eventsApp.controller('eventController',
     	$scope.today = today;
     });
     
-    eventDataService.getEvent(function(event) {
+    // using the callback function
+    /*eventDataService.getEvent(function(event) {
         $scope.event = event;
-    });
+    });*/
 
-	
-    $scope.upVoteSession = function(session) {
+    // without using the callback function
+    eventDataService.getEvent()
+    	.success(function(event) {
+    		$scope.event = event;
+    	})
+    	.error(function(data, status, headers, config) {
+    		$log.warn(data, status, headers(), config);
+    	});
+    
+    
+	// using the callback function
+   /* $scope.upVoteSession = function(session) {
       $scope.isCountZero = false;
       session.upVoteCount++;
       eventDataService.addVote(session.id, function(event) {
@@ -44,28 +55,24 @@ eventsApp.controller('eventController',
       eventDataService.removeVote(session.id, function(event) {
     	  $scope.event = event; 
       });
-    }
+    }*/
 
+	// without using the callback function
+     $scope.upVoteSession = function(session) {
+       session.upVoteCount++;
+       eventDataService.addVote(session.id)
+       	.success(function(event){ $scope.event = event;})
+    	.error(function(data, status, headers, config) {
+    		$log.warn(data, status, headers(), config);
+    	});
+     };
+
+     $scope.downVoteSession = function(session) {
+       session.upVoteCount--;
+       eventDataService.removeVote(session.id)
+       		.success(function(event) { $scope.event = event;})
+        	.error(function(data, status, headers, config) {
+        		$log.warn(data, status, headers(), config);
+        	});
+     };
   });
-
-/*eventsApp.controller('EventController', 
-	function EventController($scope, eventData) {
-		
-		
-		eventData.getEvent( function(event) {
-			$scope.event = event;
-		});
-		
-		$scope.event = {
-					name: "Angular JS", 
-					date: "01/01/2016", 
-					time: "10:00 AM", 
-					location: {
-						address: "1500 New York St", 
-						city: "Mauntain View", 
-						province: "NY"
-					}, 
-					imageUrl: "/img/angularjs-logo.png"
-			
-	}
-);*/
