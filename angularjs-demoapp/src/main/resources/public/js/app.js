@@ -1,6 +1,6 @@
 'use strict';
 
-var eventsApp = angular.module('eventsApp', ['ngSanitize']);
+var eventsApp = angular.module('eventsApp', ['ngSanitize', 'ngResource']);
 
 
 /*controller('ShipwreckEditController', function($scope, $state, $stateParams, Shipwreck) {

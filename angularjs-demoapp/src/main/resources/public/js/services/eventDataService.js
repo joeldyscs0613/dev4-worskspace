@@ -1,4 +1,4 @@
-eventsApp.factory('eventDataService', function($http, $log) {
+eventsApp.factory('eventDataService', function($http, $log, $resource) {
     return {
     	
     	// getEvent function using the successcb callback function
@@ -42,6 +42,20 @@ eventsApp.factory('eventDataService', function($http, $log) {
     			sOrder = '-upVoteCount';
     		}
     		sortOrder(sOrder);
+    	},
+        
+        /* Using $resource instead of $http */
+        
+        getResourceEvent : function () {
+        	return $resource ('/data/event/:id', {id : '@id'}).get({id:1});
+        },
+    	
+    	addResourceVote : function (sessionId) {
+    		return $resource ('/data/event/addVote/:id', {id : '@id'}).get({id:sessionId});
+    	},
+    	
+    	removeResourceVote : function (sessionId) {
+    		return $resource ('/data/event/removeVote/:id', {id : '@id'}).get({id:sessionId});
     	}
     };
 });

@@ -21,58 +21,90 @@ eventsApp.controller('eventController',
     $scope.ngReadonly = false;
     $scope.isCountZero = true;
     
+    $scope.useHttp = false;
+    
     eventDataService.getTodaysDate(function(today){
     	$scope.today = today;
     });
     
-    // using the callback function
-    /*eventDataService.getEvent(function(event) {
-        $scope.event = event;
-    });*/
-
-    // without using the callback function
-    eventDataService.getEvent()
-    	.success(function(event) {
-    		$scope.event = event;
-    	})
-    	.error(function(data, status, headers, config) {
-    		$log.warn(data, status, headers(), config);
-    	});
     
-    
-	// using the callback function
-   /* $scope.upVoteSession = function(session) {
-      $scope.isCountZero = false;
-      session.upVoteCount++;
-      eventDataService.addVote(session.id, function(event) {
-    	  $scope.event = event; 
-      });
-    };
+    /* uses the eventDataServices $http */
+    if($scope.useHttp) {
 
-    $scope.downVoteSession = function(session) {
-      $scope.isCountZero = false;
-      session.upVoteCount--;
-      eventDataService.removeVote(session.id, function(event) {
-    	  $scope.event = event; 
-      });
-    }*/
-
-	// without using the callback function
-     $scope.upVoteSession = function(session) {
-       session.upVoteCount++;
-       eventDataService.addVote(session.id)
-       	.success(function(event){ $scope.event = event;})
-    	.error(function(data, status, headers, config) {
-    		$log.warn(data, status, headers(), config);
-    	});
-     };
-
-     $scope.downVoteSession = function(session) {
-       session.upVoteCount--;
-       eventDataService.removeVote(session.id)
-       		.success(function(event) { $scope.event = event;})
-        	.error(function(data, status, headers, config) {
-        		$log.warn(data, status, headers(), config);
-        	});
-     };
+	    // using the callback function
+	    /*eventDataService.getEvent(function(event) {
+	        $scope.event = event;
+	    });*/
+	
+	    // without using the callback function
+	    eventDataService.getEvent()
+	    	.success(function(event) {
+	    		$scope.event = event;
+	    	})
+	    	.error(function(data, status, headers, config) {
+	    		$log.warn(data, status, headers(), config);
+	    	});
+	    
+	    
+		// using the callback function
+	   /* $scope.upVoteSession = function(session) {
+	      $scope.isCountZero = false;
+	      session.upVoteCount++;
+	      eventDataService.addVote(session.id, function(event) {
+	    	  $scope.event = event; 
+	      });
+	    };
+	
+	    $scope.downVoteSession = function(session) {
+	      $scope.isCountZero = false;
+	      session.upVoteCount--;
+	      eventDataService.removeVote(session.id, function(event) {
+	    	  $scope.event = event; 
+	      });
+	    }*/
+	
+		// without using the callback function
+	     $scope.upVoteSession = function(session) {
+	       session.upVoteCount++;
+	       eventDataService.addVote(session.id)
+	       	.success(function(event){ $scope.event = event;})
+	    	.error(function(data, status, headers, config) {
+	    		$log.warn(data, status, headers(), config);
+	    	});
+	     };
+	
+	     $scope.downVoteSession = function(session) {
+	       session.upVoteCount--;
+	       eventDataService.removeVote(session.id)
+	       		.success(function(event) { $scope.event = event;})
+	        	.error(function(data, status, headers, config) {
+	        		$log.warn(data, status, headers(), config);
+	        	});
+	     };
+     
+     /* using $resource instead of $http */
+	} else {
+	     eventDataService.getResourceEvent ()
+		 	.$promise
+		 		.then(function(event) { $scope.event = event; })
+			 	.catch(function(response) {
+			 		console.log(reponse);
+			 	});
+	     
+	     $scope.upVoteSession  = function (session) {
+	       session.upVoteCount++;
+	       eventDataService.addResourceVote(session.id)
+	     	.$promise
+	     		.then(function (event) { $scope.event = event;})	     		
+	     		.catch(function (response) {console.log(response); });
+		 };
+	     
+		 $scope.downVoteSession  = function (session) {
+		       session.upVoteCount--;
+		       eventDataService.removeResourceVote(session.id)
+		     	.$promise
+		     		.then(function (event) { $scope.event = event;})	     		
+		     		.catch(function (response) {console.log(response); });
+		};
+     }
   });
