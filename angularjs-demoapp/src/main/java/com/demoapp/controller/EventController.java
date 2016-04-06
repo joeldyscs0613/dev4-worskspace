@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demoapp.model.EventModel;
+import com.demoapp.model.SessionModel;
 
 @RestController
 @RequestMapping("data/event/")
@@ -36,10 +37,24 @@ public class EventController {
 		return shipwreckRepository.findOne(id);
 	}*/
 	
+
 	@RequestMapping(value= "{id}", method = RequestMethod.GET)
 	public EventModel get(@PathVariable Long id) {
 		return EventModelStub.get(id);
 		//return shipwreckRepository.findOne(id);
+	}
+	
+	@RequestMapping(value= "createEvent", method = RequestMethod.POST)
+	public EventModel create(@RequestBody EventModel event) {
+		return EventModelStub.create(event);
+		//return shipwreckRepository.saveAndFlush(shipwreck);
+	}
+	
+	
+	@RequestMapping(value= "createSession/{id}", method = RequestMethod.POST)
+	public SessionModel createSession(@PathVariable Long id, @RequestBody SessionModel session) {
+		return EventModelStub.addSession(id, session);
+		//return shipwreckRepository.saveAndFlush(shipwreck);
 	}
 	
 	@RequestMapping(value= "addVote/{sessionId}", method = RequestMethod.PUT)

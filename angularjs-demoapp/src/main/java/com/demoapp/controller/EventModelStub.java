@@ -68,4 +68,14 @@ public class EventModelStub {
 		}
 		return event;
 	}
+
+	public static SessionModel addSession(Long id, SessionModel session) {
+		session.setId(sessions.size());
+		EventModel event = get(id);
+		if(event != null) {
+			event.getSessions().add(session);
+		}
+		
+		return event.getSessions().get(sessions.size());
+	}
 }

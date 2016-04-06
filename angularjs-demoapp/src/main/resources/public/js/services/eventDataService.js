@@ -1,8 +1,11 @@
 eventsApp.factory('eventDataService', function($http, $log, $resource) {
     return {
-    	
+    	extract: function(result) {
+    		return result.data;
+    	},
     	// getEvent function using the successcb callback function
-        /*getEvent: function(successcb) {
+        
+    	getEventUsingCallbackFunction: function(successcb) {
             $http({method: 'GET', url: '/data/event/1'}).
                 success(function(data, status, headers, config) {
                     successcb(data)
@@ -10,19 +13,27 @@ eventsApp.factory('eventDataService', function($http, $log, $resource) {
                 error(function(data, status, headers, config) {
                     $log.warn(data, status, headers(), config);
                 });
-        },*/
+        },
         
     	// getEvent function without using the successcb callback function
         getEvent: function() {
              return $http({method: 'GET', url: '/data/event/1'});
         },
+
+        saveEvent: function(event) {
+            return $http.post('/data/event/createEvent/', event).then(extract);
+        },
+        
+        saveSession: function(session) {
+            return $http.post('/data/event/createSession/1', session);
+        },
         
         addVote: function(sessionId, successcb) {
              return $http({method: 'PUT', url: '/data/event/addVote/'+sessionId});
         },
-        
+       
         removeVote: function(sessionId, successcb) {
-            $http({method: 'PUT', url: '/data/event/removeVote/'+sessionId});
+            return $http({method: 'PUT', url: '/data/event/removeVote/'+sessionId});
         }, 
         
         getTodaysDate: function(todaysDate) {
@@ -50,8 +61,12 @@ eventsApp.factory('eventDataService', function($http, $log, $resource) {
         	return $resource ('/data/event/:id', {id : '@id'}).get({id:1});
         },
     	
+        saveResourceEvent : function (event) {
+        	return $resource ('/data/event/createEvent/', {id : '@id'}).get({id:1});
+        },
+        
     	addResourceVote : function (sessionId) {
-    		return $resource ('/data/event/addVote/:id', {id : '@id'}).get({id:sessionId});
+    		return $resource ('/data/event/addVote/:id', {id : '@id'}).get({id:sessionId}).save(event);
     	},
     	
     	removeResourceVote : function (sessionId) {

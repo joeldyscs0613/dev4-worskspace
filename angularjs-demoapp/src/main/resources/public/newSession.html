@@ -1,0 +1,85 @@
+<!doctype html>
+<html ng-app="eventsApp">
+  <head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/app.css">
+  </head>  
+  
+  <body ng-cloack>
+    <div class="container">  
+    	<div class="navbar">
+    		<div class="navbar-inner">
+    			<ul class="nav">
+    				<li>
+    					<a href="/eventDetails.html">Session Details</a>
+    				</li>
+    			</ul>
+    		</div>
+    	</div>
+    	<div ng-controller="editSessionController" style="padding-left:20px; padding-right:20px;">
+    		<div class="container">
+    		
+    		  <!-- 
+	private int duration;
+	private String durationString;
+	private String level;
+	private String sessionAbstract;
+	private int upVoteCount;
+	
+	public SessionModel() {}
+	
+	public SessionModel(int id, String name, String creatorName, int duration, 
+			String level, String sessionAbstract) {
+  
+  
+   -->
+				<h1>New Session</h1>
+				<hr />
+				<form name="newSessionForm">
+					<fieldset>
+						<label for="sessionName">Session Name:</label>
+						<input required ng-model="session.name" id="sessionName" type="text" placeholder="Name of your session ..."/>
+
+						<label for="creatorName">Creator Name:</label>
+						<input ng-model="session.creatorName" id="creatorName" type="text" required  placeholder="Session creator name ..."/>
+						
+						<label for="sessionDuration">Session Duration:</label>
+						<input ng-model="session.duration" id="sessionDuration" ng-pattern="/\d/" type="number" placeholder="3 (in hours)"/>
+			
+						<label for="sessionLevel">Session Level:</label>
+						<input ng-model="session.level" id="sessionLevel" type="text" placeholder="Level (Introductory, Intermediate, Advanced)"/>
+						
+						<label for="sessionAbstract">Session Abstract:</label>
+						<input ng-model="session.sessionAbstract" id="sessionAbstract" type="text" placeholder="Abstract of the session ..."/>
+
+						
+						</fieldset>
+					
+					<img alt="Alternative Image" ng-src="{{event.imageUrl}}" src="">
+
+					
+					<br />
+					<br />
+					
+					
+					<button type="submit" ng-click="saveSession(session, newSessionForm)" ng-disabled="newSessionForm.$invalid" class="btn btn-primary">Save</button>
+					<button type="button" ng-click="cancelEdit()" class="btn btn-default">Cancel</button>
+				</form>
+    		</div>
+    	</div>
+    </div>
+  
+    <script src="/lib/jquery.min.js"></script>
+    <script src="/lib/underscore-1.4.4.min.js"></script>
+    <script src="/lib/bootstrap.min.js"></script>
+    <script src="/lib/angular/angular.js"></script>
+        <script src="/lib/angular/angular-sanitize.js"></script>
+    <script src="/lib/angular/angular-resource.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/controllers/eventController.js"></script>
+    <script src="/js/controllers/editEventController.js"></script>
+    <script src="/js/services/eventDataService.js"></script>
+    <script src="/js/controllers/editSessionController.js"></script>
+    <script src="/js/filters.js"></script>
+  </body>
+</html>

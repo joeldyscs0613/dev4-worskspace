@@ -1,10 +1,19 @@
 'use strict'
 
-eventsApp.controller('editEventController', function editEventController($scope) {
+eventsApp.controller('editEventController', function editEventController($scope, eventDataService) {
 
-	$scope.saveEvent = function (event, newEventForm) {
+	$scope.saveEventWithPromise = function (event, newEventForm) {
 		if(newEventForm.$valid) { 
-			window.alert('Event ' + event.name + ' saved!');
+			eventDataService.saveResourceEvent(event)
+			.$promise
+			.then(function (response) {console.log('sucess', response);})
+			.catch( function (response) {console.log('failure', response);})
+		}
+	};
+	
+	$scope.saveEvent = function (event, newEventForm) {
+		if(newEventForm.$valid) {
+			console.log('success', eventDataService.saveEvent(event));
 		}
 	};
 	

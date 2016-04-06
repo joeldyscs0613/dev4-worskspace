@@ -21,7 +21,7 @@ eventsApp.controller('eventController',
     $scope.ngReadonly = false;
     $scope.isCountZero = true;
     
-    $scope.useHttp = false;
+    $scope.useHttp = true;
     
     eventDataService.getTodaysDate(function(today){
     	$scope.today = today;
@@ -47,7 +47,7 @@ eventsApp.controller('eventController',
 	    
 	    
 		// using the callback function
-	   /* $scope.upVoteSession = function(session) {
+	   $scope.upVoteSessionUsingCallbackFunction = function(session) {
 	      $scope.isCountZero = false;
 	      session.upVoteCount++;
 	      eventDataService.addVote(session.id, function(event) {
@@ -55,13 +55,13 @@ eventsApp.controller('eventController',
 	      });
 	    };
 	
-	    $scope.downVoteSession = function(session) {
+	    $scope.downVoteSessionUsingCallbackFunction = function(session) {
 	      $scope.isCountZero = false;
 	      session.upVoteCount--;
 	      eventDataService.removeVote(session.id, function(event) {
 	    	  $scope.event = event; 
 	      });
-	    }*/
+	    }
 	
 		// without using the callback function
 	     $scope.upVoteSession = function(session) {
