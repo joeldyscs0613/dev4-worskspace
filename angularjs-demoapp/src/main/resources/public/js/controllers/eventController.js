@@ -1,7 +1,7 @@
 'use strict';
 
 eventsApp.controller('eventController', 
-  function eventController($scope, eventDataService, $log) {
+  function eventController($scope, eventDataService, $log, $routeParams, $route) {
     
     $scope.snippest = '<span style="color:red">Hi there!</span>'
     $scope.showBoolVal = true;
@@ -27,6 +27,20 @@ eventsApp.controller('eventController',
     	$scope.today = today;
     });
     
+    $scope.event = eventDataService.getResourceEvent($routeParams.eventId);
+    
+    // this will log the foo variable value from the url query string. In this case, "bar", 
+    // http://localhost:8080/#/event/12?foo=bar
+    console.log($route.current.params.foo);
+
+    // This will output the event Id. In this case, 12
+    // http://localhost:8080/#/event/12?foo=bar
+    console.log($route.current.params.eventId);
+    
+    // This will output the event Id. Notice that pathParam will not work to access query string parmas such as foo.
+    // In this case, 12 is the Event Id from the url below, 
+    // http://localhost:8080/#/event/12?foo=bar
+    console.log('Event Id using pathParams: ' + $route.current.pathParams.eventId);
     
     /* uses the eventDataServices $http */
     if($scope.useHttp) {
@@ -37,16 +51,20 @@ eventsApp.controller('eventController',
 	    });*/
 	
 	    // without using the callback function
-	    eventDataService.getEvent()
-	    	.success(function(event) {
-	    		$scope.event = event;
-	    	})
-	    	.error(function(data, status, headers, config) {
-	    		$log.warn(data, status, headers(), config);
-	    	});
-	    
-	    
-		// using the callback function
+    	/*$scope.eventDetails = function() {
+		    eventDataService.getEvent($routeParams.eventId)
+		    	.success(function(event) {
+		    		$scope.event = event;
+		    	})
+		    	.error(function(data, status, headers, config) {
+		    		$log.warn(data, status, headers(), config);
+		    	});
+    	};	    
+    	$scope.eventDetails();*/
+    	
+       
+		
+       // using the callback function
 	   $scope.upVoteSessionUsingCallbackFunction = function(session) {
 	      $scope.isCountZero = false;
 	      session.upVoteCount++;

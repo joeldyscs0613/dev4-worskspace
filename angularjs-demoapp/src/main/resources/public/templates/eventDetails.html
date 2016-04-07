@@ -1,0 +1,73 @@
+
+    	<div style="padding-left:20px; padding-right:20px">
+    		<img alt="Error Loading the Image" ng-src="{{event.imageUrl}}"/>
+    		<div class="row">
+    			<div class="span11">
+    				<!--<h2 ng-bind="event.name"></h2>  -->
+    				<h2 ng-style="myStyle" ng-bind-template="{{event.name}} {{event.date}}"></h2>
+    			</div>    			
+    		</div>
+    		<div class="row">
+    			<div class="span3">
+    				<div><strong>Date: </strong>{{event.date}}</div>
+    				<div><strong>Time: </strong>{{event.time}}</div>
+    				<div><strong>Price: </strong>{{event.price | currency}}</div>
+    			</div>
+    			<div class="span4">
+    				<address>
+    				    <strong>Address:</strong></br>
+    						{{event.location.address}}</br>
+    				    	{{event.location.city}}, {{event.location.province}}
+    				</address>
+    			</div> 			
+    		</div>
+    	
+    		<hr/>
+   			
+   			
+   			<h3 ng-class="myClass">Sessions</h3>
+   			
+   			Order By:
+   			<select ng-model="sortOrder" class="input-small">
+   				<option selected value="name">Name</option>
+   				<option value="-upCountVote">Votes</option>
+   			</select>
+   			
+   			Show:
+   			<select ng-model="query.level" class="input-medium">
+   				<option selected value="">All</option>
+   				<option ng-repeat="session in event.sessions" value="{{session.level}}">{{session.level}}</option>
+   			</select>
+   			
+   			Limit To:
+   			<select ng-model="limitTo" class="input-small">
+   				<option selected value="all" >All</option>
+   				<option ng-repeat="session in event.sessions"  value="{{$index+1}}">{{$index+1}}</option>
+   			</select>
+   		
+   			
+   			<ul class="thumbnails">
+   				<li ng-repeat="session in event.sessions | orderBy:sortOrder | limitTo:limitTo | filter:query">
+	   				<div class="row session">
+	   					<div class="span0 well votingWidget">
+	   						<div class="votingButton" ng-click="upVoteSession(session)">
+	   							<i class="icon-chevron-up icon-white"></i>
+	   						</div>
+	   						<div class="badge badge-inverse">
+	   							<div>{{session.upVoteCount}}</div>
+	   						</div>
+	   						<div class="votingButton" ng-click="downVoteSession(session)">
+	   							<i ng:class="{true:'icon-chevron-down icon-white', false:'icon-chevron-down'}[session.upVoteCount>0]"></i>
+	   						</div>
+	   					</div>
+		   				<div class="well span9">
+		   					<h4 class="well-title">{{session.name}}</h4>
+		   					<h6 margin-top="-10px" >Creator: {{session.creatorName | capitalizations}}</h6>
+		   					<span class="well-title">Duration: {{session.duration | durations}}</span><br/>
+		   					<span class="well-title">Level: {{session.level}}</span>
+		   					<p class="well-title">Abstract: {{session.sessionAbstract}}</p>
+		   				</div>   				
+	   				</div>
+   				</li>
+   			</ul>      	
+    	</div>       

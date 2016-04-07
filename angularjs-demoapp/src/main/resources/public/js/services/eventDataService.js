@@ -15,9 +15,12 @@ eventsApp.factory('eventDataService', function($http, $log, $resource) {
                 });
         },
         
+        getAllEvents: function() {
+            return $http({method: 'GET', url: '/data/event/events/'});
+        },
     	// getEvent function without using the successcb callback function
-        getEvent: function() {
-             return $http({method: 'GET', url: '/data/event/1'});
+        getEvent: function(eventId) {
+             return $http({method: 'GET', url: '/data/event/' + eventId});
         },
 
         saveEvent: function(event) {
@@ -57,8 +60,8 @@ eventsApp.factory('eventDataService', function($http, $log, $resource) {
         
         /* Using $resource instead of $http */
         
-        getResourceEvent : function () {
-        	return $resource ('/data/event/:id', {id : '@id'}).get({id:1});
+        getResourceEvent : function (eventId) {
+        	return $resource ('/data/event/:id', {id : '@id'}).get({id:eventId});
         },
     	
         saveResourceEvent : function (event) {

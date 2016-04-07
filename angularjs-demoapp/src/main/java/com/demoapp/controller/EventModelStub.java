@@ -21,16 +21,23 @@ public class EventModelStub {
 		sessions.add(new SessionModel(sessions.size(), "Scopes for fun", "john Doe", 2, "Introductory", "In this session you will learn about scopes."));
 		sessions.add(new SessionModel(sessions.size(), "A Well Behaved Controller","Jane Doe", 3, "Intermidiate", "In this session you will learn about controllers."));
 		sessions.add(new SessionModel(sessions.size(), "Services","Papa Doe", 4, "Intermidiate", "In this session you will learn about services."));
-		EventModel a = new EventModel( 1L, "Test Event", "01-01-13", "10 AM", 
+		EventModel a = new EventModel("Test Event A", "01-01-13", "10 AM", 
 				new LocationModel("Test Address", "Test City", "NY"), "/img/angularjs-logo.png", 149.99, sessions);
-		events.put(1L, a);
+		//events.put(1L, a);
+		EventModel b = new EventModel("Test Event B", "02-02-13", "11 AM", 
+				new LocationModel("Test Address", "Test City", "NY"), "/img/angularjs-logo.png", 149.99, sessions);
+		EventModel c = new EventModel("Test Event C", "03-01-13", "10 AM", 
+				new LocationModel("Test Address", "Test City", "NY"), "/img/angularjs-logo.png", 149.99, sessions);
+		create(a);
+		create(b);
+		create(c);
 		/*Shipwreck b = new Shipwreck(2L, "Thistlegorm", "British merchant boat in the Red Sea", "GOOD", 80, 44.12, 138.44, 1994);
 		events.put(2L, b);
 		Shipwreck c = new Shipwreck(3L, "S.S. Yongala", "A luxury passenger ship wrecked on the great barrier reef", "FAIR", 50, 44.12, 138.44, 1994);
 		events.put(3L, c);*/
 	}
 
-	public static List<EventModel> list() {
+	public static List<EventModel> getAllEvents() {
 		return new ArrayList<EventModel>(events.values());
 	}
 

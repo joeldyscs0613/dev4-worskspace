@@ -1,5 +1,7 @@
 package com.demoapp.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +40,12 @@ public class EventController {
 	}*/
 	
 
+	@RequestMapping(value= "events", method = RequestMethod.GET)
+	public List<EventModel> getAllEvents() {
+		return EventModelStub.getAllEvents();
+		//return shipwreckRepository.findOne(id);
+	}
+	
 	@RequestMapping(value= "{id}", method = RequestMethod.GET)
 	public EventModel get(@PathVariable Long id) {
 		return EventModelStub.get(id);

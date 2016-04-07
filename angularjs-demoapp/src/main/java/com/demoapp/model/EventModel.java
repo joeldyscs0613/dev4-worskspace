@@ -15,8 +15,7 @@ public class EventModel {
 	
 	public EventModel() {}
 	
-	public EventModel(Long id, String name, String date, String time, LocationModel location, String imageUrl, double price, List<SessionModel> sessions) {
-		this.id = id;
+	public EventModel(String name, String date, String time, LocationModel location, String imageUrl, double price, List<SessionModel> sessions) {
 		this.name = name;
 		this.date = date;
 		this.time = time;
